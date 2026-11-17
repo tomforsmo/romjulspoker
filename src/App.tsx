@@ -254,13 +254,7 @@ const SupabaseService = {
 // LYDEFFEKTER (WEB AUDIO API)
 // ============================================================================
 
-function playTournamentSound(type = 'levelUp') {
-  try {
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    if (!AudioCtx) return;
-    const ctx = new AudioCtx();
-
-    const playTone = (freq, startTime, duration, oscType = 'sine', gainVal = 0.25) => {
+const playTone = (freq, startTime, duration, oscType = 'triangle', gainVal = 0.9) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = oscType;
@@ -280,17 +274,17 @@ function playTournamentSound(type = 'levelUp') {
     const now = ctx.currentTime;
     if (type === 'warning') {
       // Kort dobbeltpip ved 10 sekunder igjen
-      playTone(880, now, 0.12, 'triangle', 0.15);
-      playTone(880, now + 0.18, 0.12, 'triangle', 0.15);
+      playTone(880, now, 0.12, 'triangle', 0.8);
+      playTone(880, now + 0.18, 0.12, 'triangle', 0.8);
     } else if (type === 'countdown') {
       // Nedtellingspip siste 3 sekunder
-      playTone(660, now, 0.1, 'sine', 0.18);
+      playTone(660, now, 0.1, 'triangle', 0.85);
     } else {
       // Tydelig kasino-klokke/gong ved nivåskifte
-      playTone(523.25, now, 0.35, 'triangle', 0.3); // C5
-      playTone(659.25, now + 0.15, 0.35, 'triangle', 0.3); // E5
-      playTone(783.99, now + 0.3, 0.55, 'triangle', 0.35); // G5
-      playTone(1046.5, now + 0.45, 0.85, 'sine', 0.3); // C6
+      playTone(523.25, now, 0.35, 'triangle', 0.95); // C5
+      playTone(659.25, now + 0.15, 0.35, 'triangle', 0.95); // E5
+      playTone(783.99, now + 0.3, 0.55, 'triangle', 1.0); // G5
+      playTone(1046.5, now + 0.45, 0.85, 'triangle', 1.0); // C6
     }
   } catch (e) {
     console.warn('Kunne ikke spille av lyd:', e);
