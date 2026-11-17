@@ -253,6 +253,11 @@ const SupabaseService = {
 // ============================================================================
 // LYDEFFEKTER (WEB AUDIO API)
 // ============================================================================
+function playTournamentSound(type = 'levelUp') {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
 
 const playTone = (freq, startTime, duration, oscType = 'triangle', gainVal = 0.9) => {
       const osc = ctx.createOscillator();
